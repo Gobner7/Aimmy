@@ -280,6 +280,44 @@ namespace AimmyWPF
             Point start = new(0, 0); // Current cursor position (locked to center screen)
             Point end = new(targetX, targetY);
             Point control1 = new(start.X + (end.X - start.X) / 3, start.Y + (end.Y - start.Y) / 3);
+
+        private void PredictionMethodDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            var selectedMethod = comboBox.SelectedItem as ComboBoxItem;
+
+            switch (selectedMethod.Content.ToString())
+            {
+                case "Weighted Average Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.WeightedAveragePrediction;
+                    break;
+                case "Exponential Smoothing Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.ExponentialSmoothingPrediction;
+                    break;
+                case "Quadratic Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.QuadraticPrediction;
+                    break;
+                case "Velocity-Based Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.VelocityBasedPrediction;
+                    break;
+                case "Average Velocity Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.AverageVelocityPrediction;
+                    break;
+                case "Directional Change Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.DirectionalChangePrediction;
+                    break;
+                case "Acceleration-Based Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.AccelerationBasedPrediction;
+                    break;
+                case "Adaptive Response Prediction":
+                    predictionManager.CurrentPredictionMethod = predictionManager.AdaptiveResponsePrediction;
+                    break;
+                // Add cases for any other prediction methods
+                default:
+                    break;
+            }
+        }
+
             Point control2 = new(start.X + 2 * (end.X - start.X) / 3, start.Y + 2 * (end.Y - start.Y) / 3);
 
             // Calculate new position along the Bezier curve
