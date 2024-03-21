@@ -270,6 +270,13 @@
                             </TabItem>
                         </TabControl>
                     </Grid>
+
+                        <ComboBox x:Name="PredictionMethodDropdown" Margin="10,10,10,0" VerticalAlignment="Top">
+                            <ComboBoxItem Content="Weighted Average Prediction" IsSelected="True" />
+                            <ComboBoxItem Content="Exponential Smoothing Prediction" />
+                            <ComboBoxItem Content="Quadratic Prediction" />
+                        </ComboBox>
+
                     <ScrollViewer x:Name="SettingsMenu"
                                   VerticalScrollBarVisibility="Hidden"
                                   PanningMode="VerticalOnly"
