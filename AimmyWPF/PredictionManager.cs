@@ -50,6 +50,39 @@ namespace AimmyWPF
         }
     }
 
+        // Velocity-Based Prediction Method
+        public Detection VelocityBasedPrediction(List<Detection> pastPositions) {
+            if (pastPositions.Count < 2) return pastPositions.Last();
+
+            var lastPosition = pastPositions[^1];
+            var secondLastPosition = pastPositions[^2];
+
+            int velocityX = lastPosition.X - secondLastPosition.X;
+            int velocityY = lastPosition.Y - secondLastPosition.Y;
+
+            return new Detection { X = lastPosition.X + velocityX, Y = lastPosition.Y + velocityY };
+        }
+
+        // Average Velocity Prediction Method
+        public Detection AverageVelocityPrediction(List<Detection> pastPositions, int windowSize) {
+            if (pastPositions.Count < windowSize) return pastPositions.Last();
+
+            int sumVelocityX = 0;
+            int sumVelocityY = 0;
+
+            for (int i = pastPositions.Count - windowSize + 1; i < pastPositions.Count; i++) {
+                sumVelocityX += pastPositions[i].X - pastPositions[i - 1].X;
+                sumVelocityY += pastPositions[i].Y - pastPositions[i - 1].Y;
+            }
+
+            int avgVelocityX = sumVelocityX / (windowSize - 1);
+            int avgVelocityY = sumVelocityY / (windowSize - 1);
+
+            var lastPosition = pastPositions.Last();
+            return new Detection { X = lastPosition.X + avgVelocityX, Y = lastPosition.Y + avgVelocityY };
+        }
+
+
         // Directional Change Prediction Method
         public Detection DirectionalChangePrediction(List<Detection> pastPositions) {
             if (pastPositions.Count < 3) return pastPositions.Last();
