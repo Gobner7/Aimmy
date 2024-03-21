@@ -164,6 +164,10 @@
                                             CornerRadius="5"
                                             Margin="0,0,0,44">
                                         <ListBox x:Name="SelectorListBox"
+                            <ComboBoxItem Content="Weighted Average Prediction" />
+                            <ComboBoxItem Content="Exponential Smoothing Prediction" />
+                            <ComboBoxItem Content="Quadratic Prediction" />
+
                                                  Foreground="#DDFFFFFF"
                                                  FontFamily="/AimmyWPF;component/Fonts/#Atkinson Hyperlegible"
                                                  Margin="0"
