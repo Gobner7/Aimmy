@@ -275,7 +275,13 @@
                             <ComboBoxItem Content="Weighted Average Prediction" IsSelected="True" />
                             <ComboBoxItem Content="Exponential Smoothing Prediction" />
                             <ComboBoxItem Content="Quadratic Prediction" />
+                            <ComboBoxItem Content="Velocity-Based Prediction" />
+                            <ComboBoxItem Content="Average Velocity Prediction" />
+                            <ComboBoxItem Content="Directional Change Prediction" />
+                            <ComboBoxItem Content="Acceleration-Based Prediction" />
+                            <ComboBoxItem Content="Adaptive Response Prediction" />
                         </ComboBox>
+
 
                     <ScrollViewer x:Name="SettingsMenu"
                                   VerticalScrollBarVisibility="Hidden"
