@@ -159,20 +159,18 @@
                                 </TabItem.Header>
                                 <Grid>
                                     <Border Background="#FF191919"
-                                            BorderBrush="#FF1E1E1E"
-                                            BorderThickness="2"
-                                            CornerRadius="5"
-                                            Margin="0,0,0,44">
-                        </ListBox>
-
-                            <ComboBoxItem Content="Weighted Average Prediction" />
-                            <ComboBoxItem Content="Exponential Smoothing Prediction" />
-                            <ComboBoxItem Content="Quadratic Prediction" />
-
+                                        BorderBrush="#FF1E1E1E"
+                                        BorderThickness="2"
+                                        CornerRadius="5"
+                                        Margin="0,0,0,44">
+                                        <ListBox x:Name="SelectorListBox"
                                                  Foreground="#DDFFFFFF"
                                                  FontFamily="/AimmyWPF;component/Fonts/#Atkinson Hyperlegible"
                                                  Margin="0"
                                                  Padding="2">
+                                        </ListBox>
+                                    </Border>
+
                                         </ListBox>
                                     </Border>
                                     <Border Background="#FF191919"
