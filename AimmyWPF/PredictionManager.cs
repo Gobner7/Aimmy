@@ -50,6 +50,76 @@ namespace AimmyWPF
         }
     }
 
+        // Directional Change Prediction Method
+        public Detection DirectionalChangePrediction(List<Detection> pastPositions) {
+            if (pastPositions.Count < 3) return pastPositions.Last();
+
+            var lastPosition = pastPositions[^1];
+            var secondLastPosition = pastPositions[^2];
+            var thirdLastPosition = pastPositions[^3];
+
+            var direction1 = new { X = secondLastPosition.X - thirdLastPosition.X, Y = secondLastPosition.Y - thirdLastPosition.Y };
+            var direction2 = new { X = lastPosition.X - secondLastPosition.X, Y = lastPosition.Y - secondLastPosition.Y };
+
+            var nextStep = new {
+                X = lastPosition.X + (direction2.X - direction1.X),
+                Y = lastPosition.Y + (direction2.Y - direction1.Y)
+            };
+
+            return new Detection { X = nextStep.X, Y = nextStep.Y };
+        }
+
+        // Acceleration-Based Prediction Method
+        public Detection AccelerationBasedPrediction(List<Detection> pastPositions) {
+            if (pastPositions.Count < 3) return pastPositions.Last();
+
+            var lastPosition = pastPositions[^1];
+            var secondLastPosition = pastPositions[^2];
+            var thirdLastPosition = pastPositions[^3];
+
+            var velocity1 = new { X = secondLastPosition.X - thirdLastPosition.X, Y = secondLastPosition.Y - thirdLastPosition.Y };
+            var velocity2 = new { X = lastPosition.X - secondLastPosition.X, Y = lastPosition.Y - secondLastPosition.Y };
+
+            var acceleration = new {
+                X = velocity2.X - velocity1.X,
+                Y = velocity2.Y - velocity1.Y
+            };
+
+            var nextPosition = new {
+                X = lastPosition.X + velocity2.X + acceleration.X,
+                Y = lastPosition.Y + velocity2.Y + acceleration.Y
+            };
+
+            return new Detection { X = nextPosition.X, Y = nextPosition.Y };
+        }
+
+        // Adaptive Response Prediction Method
+        private List<Detection> recentPredictions = new List<Detection>();
+
+        public Detection AdaptiveResponsePrediction(List<Detection> pastPositions) {
+            if (pastPositions.Count < 2 || recentPredictions.Count < 2) return pastPositions.Last();
+
+            var lastActual = pastPositions.Last();
+            var lastPrediction = recentPredictions.Last();
+
+            var error = new {
+                X = lastActual.X - lastPrediction.X,
+                Y = lastActual.Y - lastPrediction.Y
+            };
+
+            var nextPrediction = new Detection {
+                X = lastActual.X + error.X,
+                Y = lastActual.Y + error.Y
+            };
+
+            recentPredictions.Add(nextPrediction);
+            if (recentPredictions.Count > 10) // Keep the list size manageable
+                recentPredictions.RemoveAt(0);
+
+            return nextPrediction;
+        }
+
+
         // Simple Moving Average Prediction Method
         public Detection SimpleMovingAveragePrediction(List<Detection> pastPositions, int windowSize) {
             if (pastPositions.Count < windowSize) return pastPositions.Last();
